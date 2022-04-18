@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row header m-0 align-items-center">
+        <div class="col-2"><a href="{{ path('home') }}"><img src='assets/img/cancel.png'></a></div>
+        <div class="col-8 ps-5 titre-page">Ajouter une transaction</div>
+        <div class="col-2 "></div>
+    </div>
+    <hr class="m-0">
+    <div class="container-crypto container">
+        <div class=" mt-5 pt-5">
+            {{ form_start(form) }}
+            <div class="input-container border border-white  border-1 rounded-3">
+                <i class="fa fa-search icon"></i>
+                {# on affiche les cryptos récupérés par l'API#}
+                {{ form_widget(form.crypto, {'attr': {'class': 'input-field'}}) }}
+            </div>
+            <div class="input-container border border-white  border-1 rounded-3">
+                <i class="fa fa-database icon"></i>
+                {{ form_widget(form.quantity, {'attr': {'class': 'input-field', 'placeholder': 'Quantité'}}) }}
+            </div>
+            <div class="input-container border border-white  border-1 rounded-3">
+                <i class="fa fa-eur icon"></i>
+                {{ form_widget(form.price, {'attr': {'class': 'input-field',  'placeholder': 'Prix d\'achat'}}) }}
+                {{ form_errors(form.price) }}
+            </div>
+        </div>
+        <div class="row justify-content-center fixed-bottom m-5">
+            <input type="submit" class="btn" value="AJOUTER"/>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row header m-0 align-items-center">
+        <div class="col-2"><a href="{{ path('home') }}"><img src='assets/img/cancel.png'></a></div>
+        <div class="col-8 ps-5 titre-page">Supprimer un montant</div>
+        <div class="col-2 "></div>
+    </div>
+    <hr class="m-0">
+    <div class="container-crypto container">
+    <div class=" mt-5 pt-5">
+
+        {{ form_start(form) }}
+        <div class="input-container border border-white  border-1 rounded-3">
+            <i class="fa fa-search icon"></i>
+            {# on affiche que les cryptos que l'on a #}
+            {{ form_widget(form.crypto, {'attr': {'class': 'input-field'}}) }}
+        </div>
+        <div class="input-container border border-white  border-1 rounded-3">
+            <i class="fa fa-database icon"></i>
+            {{ form_widget(form.quantity, {'attr': {'class': 'input-field', 'placeholder': 'Quantité'}}) }}
+        </div>
+        <div class="row justify-content-center fixed-bottom m-5">
+            <input type="submit" class="btn" value="VALIDER"/>
+        </div>
+        {{ form_end(form) }}
+
+        {# message si erreur de saisie ou si on essaie d'enlever une quantité suppérieure à celle que l'on acheté  #}
+        <div class="">
+            {{ message }}
+        </div>
+        <div>
+            {{ message2 }}
+        </div>
+    </div>
+{% endblock %}

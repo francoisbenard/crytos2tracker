@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row header m-0 align-items-center">
+        <div class="col-8 ps-5 logo ">Crypto Tracker</div>
+
+        {# on masque le picto modification s'il n'y a pas de cryptos #}
+        {% if myCryptos is not empty %}
+        <div class="col-2"><a href="{{ path('app_removecrypto') }}"><img src='assets/img/edit.png'></a></div>
+        {% endif %}
+
+        <div class="col-2 "><a href="{{ path('app_buycrypto') }}"><img src='assets/img/add.png'></a></div>
+    </div>
+    <hr class="m-0">
+    {# affichage du bandeau avec la rentabilité : on ajoute le "+" si rentabilité > 0 #}
+    <div class="rentability m-0 total align-items-center row justify-content-center">
+        <a class="row justify-content-center" href="{{ path('chart') }}">  {% if rentability > 0 %}
+                + {{ rentability }} €
+            {% elseif rentability < 0 %}
+                {{ rentability }} €
+            {% endif %}
+        </a>
+    </div>
+    <div class="container-crypto container p-3">
+        {# liste des cryptos achetés #}
+        {% for crypto in myCryptos %}
+            <div class="row row-crypto align-items-center">
+                <div class="col-1">
+                    <img src="{{ 'assets/img/' ~ crypto.crypto.symbol ~ '.png' }}" class="logo-crypto">
+                </div>
+                <div class="col-9 ">
+                    <span class="me-2 crypto-symbol">
+                            {{ crypto.crypto.symbol }}
+                        </span>
+                    <span class="crypto-name align-text-bottom">
+                            ({{ crypto.crypto.name }})
+                        </span>
+                </div>
+                {# on compare le prix acheté au prix API pour afficher le picto arrow-up ou arrow-down #}
+                <div class="col-2">
+                    {% for cryptoAPI in dataAPI|keys %}
+                        {% if crypto.crypto.symbol == dataAPI[cryptoAPI]['symbol'] %}
+                            {% if dataAPI[cryptoAPI]['quote']['EUR']['price'] > crypto.price %}
+                                <img src='assets/img/arrow-up.png'>
+                            {% elseif dataAPI[cryptoAPI]['quote']['EUR']['price'] < crypto.price %}
+                                <img src='assets/img/arrow-down.png'>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+    </tbody>
+    </div>
+{% endblock %}
